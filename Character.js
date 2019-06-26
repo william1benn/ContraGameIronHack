@@ -9,10 +9,11 @@ class Character{
     this.width;
     this.height;
     this.hitPoints=1;
-    this.directionFace="right";
+    this.directionFace ="Right";
     this.jump = false;
     this.jumpHeight = 55;
     this.lives =3;
+    this.moveCount = 3;
     }
 
 
@@ -47,17 +48,17 @@ class Character{
     }
 
     move(e){
-        
-
+    
         if(e.keyCode == 37){
-        this.directionFace ="left";
+            this.moveCount +=1;
+        this.directionFace ="Left";
         
         this.x -= 10;
         }
 
        else if (e.keyCode ==38){
         
-           console.log("UP");
+        //    console.log("UP");
 
            if (!this.jumping) {
             
@@ -74,8 +75,8 @@ class Character{
         }
 
         else if (e.keyCode == 39){
-
-             this.directionFace = "right";
+            this.moveCount +=1;
+             this.directionFace = "Right";
 
              this.x+=10;
             }

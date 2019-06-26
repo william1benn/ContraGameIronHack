@@ -6,14 +6,20 @@ class Game {
 constructor(){
 this.cvs = document.getElementById("canvas")
 this.ctx = this.cvs.getContext("2d");
-    this.playerImg="images/contraPlayer.png"
+    this.playerImg="images/ContraRun1.png"
+    this.playerImg2 = "images/ContraRun2.png"
+    this.playerImg3 = "images/contraRun3.png";
+    this.playerLeft = "images/contraRunLeft1.png";
+    this.playerLeft2 = "images/contraRunLeft2.png";
+    this.playerLeft3 = "images/contraRunLeft3.png";
     this.background="images/Cbackground.png";
-    this.enemyImg ="images/contraenemy.png";
+    this.enemyImg ="images/contraEneRight.png";
+    this.enemyLeft="images/contraEneLeft.png"
     this.power = "images/contraPowerU.png";
     this.mainSong = "music/main.mp3";
     this.powerUpTokenY = 430;
     this.powerUpTokenX = Math.floor(Math.random()*11)*90; //needed muliples of ten
-    this.gravity = 5;
+    this.movement =[];
     this.endGame;
     this.shutdown;
     this.eneBullet=[];
@@ -30,12 +36,13 @@ this.ctx = this.cvs.getContext("2d");
     this.height = 5;
     this.eneCounter=0;
     this.powerup = false;
+    this.moveCount =0;
 }
 
 startGame(){
     let mainSong = new Audio();
     mainSong.src = game.mainSong;
-    mainSong.play();
+    //mainSong.play();
 }
 createEnemy(){
     
@@ -62,7 +69,7 @@ drawing(){
     backG.src = this.background;
     this.ctx.drawImage(backG,0,0);
     
-    this.ctx.font = "23px 'Press Start 2P'"
+    this.ctx.font = "23px 'Press Start 2P'Press Start 2P"
     this.ctx.fillStyle = "white";
     this.ctx.fillText("Score" + game.score, 40, 30);
     
@@ -71,9 +78,47 @@ drawing(){
     this.ctx.fillText("Lives Left" + player.lives, 740, 30);
     
     //Player
+
     let mainP = new Image();
     mainP.src= this.playerImg;
-    this.ctx.drawImage(mainP,player.x,player.y);    
+    let mainP2 = new Image();
+    mainP2.src = this.playerImg2;
+    let mainP3 = new Image();
+    mainP3.src = this.playerImg3;
+
+
+    let leftP = new Image();
+    leftP.src = this.playerLeft;
+    let leftP2 = new Image();
+    leftP2.src = this.playerLeft2;
+    let leftP3 = new Image();
+    leftP3.src = this.playerLeft3;
+
+
+    //Running Images To Left 
+     
+    if (player.directionFace === "Left"){
+        if(player.moveCount % 3 ===0){
+            this.ctx.drawImage(leftP,player.x,player.y);  
+          }else if(player.moveCount % 3 ===3 ){
+            this.ctx.drawImage(leftP2,player.x,player.y); 
+          }else if (player.moveCount % 3 ===2){
+            this.ctx.drawImage(leftP3,player.x,player.y); 
+          }
+    }
+
+    //Running Images To Right
+    if (player.directionFace === "Right"){
+      if(player.moveCount % 3 ===0){
+        this.ctx.drawImage(mainP,player.x,player.y);  
+      }else if(player.moveCount % 3 ===3 ){
+        this.ctx.drawImage(mainP2,player.x,player.y); 
+      }else if (player.moveCount % 3 ===2){
+        this.ctx.drawImage(mainP3,player.x,player.y); 
+      } 
+    }
+     
+   
     
     
     this.eneCounter +=1;
@@ -83,17 +128,23 @@ drawing(){
         game.createEnemy();
         
     }
-    
+    //Ene Generate
     game.enemy.forEach((badGuy,i)=>{
+        if(player.directionFace ==="Left"){
+        let eneLeft = new Image();
+        eneLeft.src = this.enemyLeft;
         
-        let badImg = new Image();
-        badImg.src = this.enemyImg;
+        this.ctx.drawImage(eneLeft,badGuy.eneX,badGuy.eneY);
         
-        this.ctx.drawImage(badImg,badGuy.eneX,badGuy.eneY);
-        
-        if(badGuy.eneX < 10) {
-            game.enemy.splice(1,i);
         }
+
+        if(player.direction==="Right"){
+        let eneRight = new Image();
+        eneRight.src = this.enemyImg;
+        
+        this.ctx.drawImage(eneRight,badGuy.eneX,badGuy.eneY);
+        }
+    
     });
     
     //Power Up Image
@@ -130,6 +181,7 @@ if(game.DoublePower === true){
     if(e.keyCode == 67){
         let bullet = new Bullets(player.x,player.y,this.width,this.height);
           this.doubleBullet.push(bullet);
+          bullet.movebullet();
       }
     
     });
@@ -137,10 +189,12 @@ if(game.DoublePower === true){
     if(e.keyCode == 67){
         let bullet = new Bullets(player.x,player.y,this.width,this.height);
           this.doubleBullet.push(bullet);
+          bullet.movebullet();
 }
 }
 }
 }
+
 
 
 doubleAttack(){
@@ -148,7 +202,7 @@ doubleAttack(){
     game.doubleBullet.forEach((theBullets, i) =>{
         
         
-        theBullets.movebullet();
+        //theBullets.movebullet();
         
         this.ctx.fillStyle = "blue";
         this.ctx.fillRect(theBullets.x + 30,theBullets.y + 15 ,theBullets.width,theBullets.height);
@@ -163,9 +217,6 @@ attack(){
 
     game.bulletArr.forEach((theBullets, i) =>{
        
-    
-    theBullets.movebullet();
-
     this.ctx.fillStyle = "#FF0000";
     this.ctx.fillRect(theBullets.x + 30,theBullets.y + 15 ,theBullets.width,theBullets.height);
 
@@ -183,20 +234,39 @@ bulletMaker(e) {
 
             if(e.keyCode === 32){
               let bullet = new Bullets(player.x,player.y,this.width,this.height);
-                this.bulletArr.push(bullet);
+              bullet.movebullet();
+              
+              this.bulletArr.push(bullet);
             }
 
         }, 2000);
 
 } else {
     if(e.keyCode === 32){
-              let bullet = new Bullets(player.x,player.y,this.width,this.height);
-                this.bulletArr.push(bullet);
+        let bullet = new Bullets(player.x,player.y,this.width,this.height);
+        bullet.movebullet();
+       
+        this.bulletArr.push(bullet);
             }
 }
     }
+//Collisions For Second Gun Power Up
+    doubleGunCollison(){
+        
+    for(let i = 0; i <  game.doubleBullet.length; i++ ){
+        for(let k =0; k <  game.enemy.length; k++ ){
 
 
+if(game.doubleBullet[i].x + game.doubleBullet[i].width > game.enemy[k].eneX && game.doubleBullet[i].x <  game.enemy[k].eneX + 23 && game.doubleBullet[i].y + game.doubleBullet[i].height > game.enemy[k].eneY && game.doubleBullet[i].y <  game.enemy[k].eneY + 23){
+   
+                game.enemy.splice(k, 1);
+                game.doubleBullet.splice(i, 1)
+                game.score += 50;
+
+        }
+        }
+    }
+}
 
 //Loops  //Keeps looping and counting
     collisions(){
@@ -222,15 +292,16 @@ bulletMaker(e) {
 
     for(let t=0; t < game.eneBullet.length; t++){
 
-        if(game.eneBullet[t].x + game.eneBullet[t].width > player.x && game.eneBullet[t].x < player.x + 1 && game.eneBullet[t].y + game.eneBullet[t].height > player.y && game.eneBullet[t].y <  player.y +23){
-        
+        if(game.eneBullet[t].x + game.eneBullet[t].width > player.x && game.eneBullet[t].x < player.x + 10 && game.eneBullet[t].y + game.eneBullet[t].height > player.y && game.eneBullet[t].y <  player.y +23){
+
+
             player.lives -=1;
 
             game.DoublePower=false;
 
              if(player.lives === 0){
                  game.gameOver();
-                 alert("Game Over");
+                // alert("Game Over");
 
              }
 
@@ -278,7 +349,7 @@ function gameStart(){
   
 
     player = new Character();
-    bullets = new Bullets();
+   // bullets = new Bullets();
     
     game.startGame();
 
@@ -286,13 +357,14 @@ function gameStart(){
         if(game.enemy.length > 0) {
             game.collisions();
             game.playerCollison();
+            game.doubleGunCollison();
 
         }
         game.drawing();
         game.eneShooting();
         
 
-     },50);
+     },70);
 
    game.shutdown = setInterval(()=>{
         if(game.enemy.length > 0) {

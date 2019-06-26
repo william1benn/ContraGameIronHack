@@ -3,51 +3,66 @@
   <head>
     <title>Contra Reloaded</title>
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   </head>
-  <body>
-    <style>
-      .container{
-        text-align: center;
-      }
 
-      h3{
-        font-family: "Press Start 2P",cursive;
-        margin-bottom:50px;
-      }
-
-      .controls{
-        text-align: left;
-        margin-left:18px;
-      }
-
-      .info{
-        font-family: "Press Start 2P",cursive;
-        font-size: 12px;
-      }
-   
-    </style>
-
-    
-   
    <div class="container">
 
-      <h3>Contra Reloaded</h3>
- <div class= "controls"><h3>
-      Controls:
-    </h3>
+      <h1>Contra Reloaded</h1>
+
+<div class="Start-Game">
+  
+  <h4>Press Start</h4>
+
+</div>
+<div class="aButton"></div>
+<div class="Bbutton"></div>
+<div class="Start"></div>
+
+  <div id="NES"><img src="images/controllerNES.png" alt="NES-Controller"></div>
+  
+  <canvas class="bg" id="canvas" width="1000" height="500"></canvas>
+
+  <h3 id="control-title">
+          Controls:
+        </h3>
+ <div class = "controls">
+  
   <div>
-    <img src="images/space.png" alt="SpaceBarController">
+    <img src="images/tab_key2.png" alt="tab" width="235px" height="100px">
     <p class="info"> Shooting Action Control</p>
   </div>
+  <div>
+      <img src="images/shift.jpg" alt="Extra Power" width="235px" height="100px">
+      <p class="info"> Double Shooting with a power Up</p>
+    </div>
+    <div>
+        <img src="images/arrows.png" alt="Movement" width="235" height="100px">
+        <p class="info"> Move Your Player</p>
+      </div>
 </div>
-   <canvas class="bg" id="canvas" width="1000" height="500"></canvas>
+
+   
    
    </div>
+   <script src="frontPage.js"></script>
    <script src="Game.js"></script>
    <script src="Bullet.js"></script>
    <script src="Character.js"></script>
    <script src="Player.js"></script>
+
+   <script>
+
+      function blink() {
+        //console.log($('.Start-Game').eq(0).fadeIn('slow'));
+        console.log($('.Start-Game'));
+       $('.Start-Game').fadeToggle(500);
+      }
+      setInterval(blink, 500);
+
+      </script>
+      
 
 
   </body>

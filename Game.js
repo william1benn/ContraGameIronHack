@@ -1,5 +1,6 @@
 let player;
 let bullets; 
+let game;
 
 
 class Game {
@@ -20,6 +21,7 @@ this.ctx = this.cvs.getContext("2d");
     this.powerUpTokenY = 430;
     this.powerUpTokenX = Math.floor(Math.random()*11)*90; //needed muliples of ten
     this.movement =[];
+    this.FPS =1;
     this.endGame;
     this.shutdown;
     this.eneBullet=[];
@@ -100,7 +102,7 @@ drawing(){
     if (player.directionFace === "Left"){
         if(player.moveCount % 3 ===0){
             this.ctx.drawImage(leftP,player.x,player.y);  
-          }else if(player.moveCount % 3 ===3 ){
+          }else if(player.moveCount % 3 ===1 ){
             this.ctx.drawImage(leftP2,player.x,player.y); 
           }else if (player.moveCount % 3 ===2){
             this.ctx.drawImage(leftP3,player.x,player.y); 
@@ -111,7 +113,7 @@ drawing(){
     if (player.directionFace === "Right"){
       if(player.moveCount % 3 ===0){
         this.ctx.drawImage(mainP,player.x,player.y);  
-      }else if(player.moveCount % 3 ===3 ){
+      }else if(player.moveCount % 3 ===1 ){
         this.ctx.drawImage(mainP2,player.x,player.y); 
       }else if (player.moveCount % 3 ===2){
         this.ctx.drawImage(mainP3,player.x,player.y); 
@@ -123,30 +125,34 @@ drawing(){
     
     this.eneCounter +=1;
     
-    if(game.eneCounter % 100 === 0){
+    if(game.eneCounter % 500 === 0){
         
         game.createEnemy();
         
     }
+
+    game.FPS +=1;
+
+    // if(game.FPS %500 === 0){
     //Ene Generate
     game.enemy.forEach((badGuy,i)=>{
-        if(player.directionFace ==="Left"){
+        // if(player.directionFace ==="Left"){
         let eneLeft = new Image();
         eneLeft.src = this.enemyLeft;
         
         this.ctx.drawImage(eneLeft,badGuy.eneX,badGuy.eneY);
         
-        }
+        // }
 
-        if(player.direction==="Right"){
-        let eneRight = new Image();
-        eneRight.src = this.enemyImg;
+        // if(player.direction !=="Left"){
+        // let eneRight = new Image();
+        // eneRight.src = this.enemyImg;
         
-        this.ctx.drawImage(eneRight,badGuy.eneX,badGuy.eneY);
-        }
+        // this.ctx.drawImage(eneRight,badGuy.eneX,badGuy.eneY);
+        // }
     
     });
-    
+// }
     //Power Up Image
     if(game.score % 250 ===0 ){
         let powerUp = new Image();
@@ -166,9 +172,10 @@ drawing(){
         }
         
     }
-    game.attack();
-    game.doubleAttack();
-       
+    this.eneShooting();
+    this.attack();
+    this.doubleAttack();
+    requestAnimationFrame(this.drawing.bind(this));
     
 }
  
@@ -178,7 +185,7 @@ if(game.DoublePower === true){
     if(this.doubleBullet.length ===4){
         setTimeout(function(){ 
 
-    if(e.keyCode == 67){
+    if(e.keyCode == 16){
         let bullet = new Bullets(player.x,player.y,this.width,this.height);
           this.doubleBullet.push(bullet);
           bullet.movebullet();
@@ -186,7 +193,7 @@ if(game.DoublePower === true){
     
     });
 }else{
-    if(e.keyCode == 67){
+    if(e.keyCode == 16){
         let bullet = new Bullets(player.x,player.y,this.width,this.height);
           this.doubleBullet.push(bullet);
           bullet.movebullet();
@@ -232,7 +239,7 @@ bulletMaker(e) {
     if(this.bulletArr.length === 3){
         setTimeout(function(){  
 
-            if(e.keyCode === 32){
+            if(e.keyCode === 9){
               let bullet = new Bullets(player.x,player.y,this.width,this.height);
               bullet.movebullet();
               
@@ -242,7 +249,7 @@ bulletMaker(e) {
         }, 2000);
 
 } else {
-    if(e.keyCode === 32){
+    if(e.keyCode === 9){
         let bullet = new Bullets(player.x,player.y,this.width,this.height);
         bullet.movebullet();
        
@@ -300,7 +307,7 @@ if(game.doubleBullet[i].x + game.doubleBullet[i].width > game.enemy[k].eneX && g
             game.DoublePower=false;
 
              if(player.lives === 0){
-                 game.gameOver();
+                // game.gameOver();
                 // alert("Game Over");
 
              }
@@ -336,50 +343,45 @@ if(game.doubleBullet[i].x + game.doubleBullet[i].width > game.enemy[k].eneX && g
     
     }
 
- }//End 
-
-
-
-
-document.addEventListener("click",gameStart);
-let game = new Game();
-
-function gameStart(){
-
-  
-
-    player = new Character();
-   // bullets = new Bullets();
     
-    game.startGame();
+    gameStart(){
 
-    game.endGame = setInterval(function(){
-        if(game.enemy.length > 0) {
-            game.collisions();
-            game.playerCollison();
-            game.doubleGunCollison();
-
-        }
-        game.drawing();
-        game.eneShooting();
+        game = new Game();
+        player = new Character();
+     
+        game.startGame();
         
-
-     },70);
-
-   game.shutdown = setInterval(()=>{
-        if(game.enemy.length > 0) {
+        game.endGame = setInterval(function(){
+            if(game.enemy.length > 0) {
+                game.collisions();
+                game.playerCollison();
+                game.doubleGunCollison();
+                
+            }
+            game.eneShooting();
             
-            game.eneLeadMaker();
+            
+        },70);
+        
+        
+        game.shutdown = setInterval(()=>{
+            if(game.enemy.length > 0) {
+                
+                game.eneLeadMaker();
+            }
+        },2000);
+        
+        
+        
+        game.drawing();
+        
         }
-    },2000);
+
+ }//End 
 
  
 
-
-    }
-
-
-document.addEventListener("keydown",function(e){
+ document.addEventListener("keydown",function(e){
   
  player.move(e);
  game.bulletMaker(e);

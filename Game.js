@@ -216,6 +216,8 @@ doubleAttack(){
 
     if(theBullets.x > 970) {
         game.doubleBullet.splice(1,i);
+    }else if( theBullets.x < 10){
+        game.doubleBullet.splice(1,i);
     }
  });
 }
@@ -227,7 +229,10 @@ attack(){
     this.ctx.fillStyle = "#FF0000";
     this.ctx.fillRect(theBullets.x + 30,theBullets.y + 15 ,theBullets.width,theBullets.height);
 
+    
     if(theBullets.x > 970) {
+        game.bulletArr.splice(1,i);
+    }else if (theBullets.x < 10){
         game.bulletArr.splice(1,i);
     }
  });
@@ -343,7 +348,7 @@ if(game.doubleBullet[i].x + game.doubleBullet[i].width > game.enemy[k].eneX && g
     
     }
 
-    
+
     gameStart(){
 
         game = new Game();
@@ -373,7 +378,7 @@ if(game.doubleBullet[i].x + game.doubleBullet[i].width > game.enemy[k].eneX && g
         
         
         
-        game.drawing();
+        game.sing();
         
         }
 

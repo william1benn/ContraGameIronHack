@@ -49,12 +49,12 @@ class Character {
 
     move(e) {
 
-        if (e.keyCode == 37) {
+        if (e.keyCode == 65) {
             this.moveCount += 1;
             this.directionFace = "Left";
 
             this.x -= 10;
-        } else if (e.keyCode == 38) {
+        } else if (e.keyCode == 87) {
 
             if (!this.jumping) {
 
@@ -68,7 +68,7 @@ class Character {
 
                 }, 300);
             }
-        } else if (e.keyCode == 39) {
+        } else if (e.keyCode == 68) {
             this.moveCount += 1;
             this.directionFace = "Right";
 

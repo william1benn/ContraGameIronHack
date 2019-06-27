@@ -54,13 +54,7 @@ createEnemy(){
     
 }
 
-gameOver(){
-    clearInterval(game.stop);
-    clearInterval(game.stopGame);
-    clearInterval(game.shutdown);
-    clearInterval(game.endGame);
-    
-}
+
 
 //Drawing the Images
 
@@ -229,7 +223,7 @@ attack(){
     this.ctx.fillStyle = "#FF0000";
     this.ctx.fillRect(theBullets.x + 30,theBullets.y + 15 ,theBullets.width,theBullets.height);
 
-    
+    console.log(theBullets.x);
     if(theBullets.x > 970) {
         game.bulletArr.splice(1,i);
     }else if (theBullets.x < 10){
@@ -311,9 +305,9 @@ if(game.doubleBullet[i].x + game.doubleBullet[i].width > game.enemy[k].eneX && g
 
             game.DoublePower=false;
 
-             if(player.lives === 0){
-                // game.gameOver();
-                // alert("Game Over");
+            if(player.lives === 0){
+               gameOver();
+              
 
              }
 
@@ -378,9 +372,11 @@ if(game.doubleBullet[i].x + game.doubleBullet[i].width > game.enemy[k].eneX && g
         
         
         
-        game.sing();
+        game.drawing();
         
         }
+
+
 
  }//End 
 

@@ -1,16 +1,19 @@
 window.onload = function () {
     let theGame;
+    let character;
 
     let buttonA = document.querySelector(".aButton");
     let buttonB = document.querySelector(".Bbutton");
     let startButton = document.querySelector(".Start");
     let nes = document.querySelector("#NES");
     let blinkStart = document.querySelector(".Start-Game");
+    let canvasElement = document.querySelector("#canvas");
 
     startButton.addEventListener("click", startSound);
     buttonA.addEventListener("click", aSound);
     buttonB.addEventListener("click", bSound);
 
+    
     function startSound(e) {
 
         let startGame = new Audio();
@@ -39,7 +42,21 @@ window.onload = function () {
         Bbutton.play();
     }
 
-
-
-
+    
 } //End
+
+
+let canvasElement = document.querySelector("#canvas");
+
+        function gameOver(){
+
+        canvasElement.remove();
+
+        img = document.getElementById("img");
+        img.innerHTML +=`
+        
+        <img src="images/gameOver.jpg">;
+        
+        ` 
+        
+        }

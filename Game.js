@@ -119,7 +119,7 @@ drawing(){
     
     this.eneCounter +=1;
     
-    if(game.eneCounter % 500 === 0){
+    if(game.eneCounter % 300 === 0){
         
         game.createEnemy();
         

@@ -4,7 +4,7 @@
 
   }
 
-  .center{
+.center{
 display: inline-block;
 position: absolute;
 left: 50%;
@@ -45,7 +45,7 @@ margin-left: -150px;
   width: 50px;
   height: 50px;
   margin-top: 10%;
-  margin-left: 12%;
+  margin-left: 8%;
   
   }
 
@@ -57,7 +57,7 @@ margin-left: -150px;
   width: 50px;
   height: 50px;
   margin-top: 10%;
-  margin-left: 7%;
+  margin-left: 3%;
 
   }
 
@@ -68,7 +68,7 @@ margin-left: -150px;
   width: 50px;
   height: 40px;
   margin-top: 11%;
-  padding-right: 0%;
+  margin-left:20%;
 
   }
 
@@ -78,5 +78,12 @@ h4{
 
   }
   
+  #NES{
+background-image: url("../images/controllerNES.png");
+background-repeat: no-repeat;
+display: inline-block;
+width: 700px;
+height:700px;
+  }
 
   

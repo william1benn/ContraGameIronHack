@@ -5,23 +5,32 @@
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
   </head>
+  <body>
 
-   <div class="container">
+<div class="container">
 
-      <h1>Contra Reloaded</h1>
+  <h1 id="main-title">Contra Reloaded</h1>
 
-<div class="Start-Game">
+<div class="start-game">
   
   <h4>Press Start</h4>
+  
 
 </div>
+<div class="startgamebtn">
+  <button type="button" class="nes-btn is-success">START</button>
+</div>
 
-<div class="aButton"></div>
-<div class="Bbutton"></div>
-<div class="Start"></div>
+<section class="message-list">
+    <section class="message -left" id="bubble">
+      <div class="nes-balloon from-left">
+        <p>Welcome to Contra Reloaded, controls are on the bottom.</p>
+        <p>Press start to play.</p>
+      </div>
+    </section>
 
-  <div id="NES"><img src="images/controllerNES.png" alt="NES-Controller"></div>
   
   <canvas class="bg" id="canvas" width="1000" height="500"></canvas>
   <div id="img"></div>
@@ -57,7 +66,7 @@
    <script>
 
       function blink() {       
-       $('.Start-Game').fadeToggle(500);
+       $('.start-game').fadeToggle(500);
       }
       setInterval(blink, 500);
 

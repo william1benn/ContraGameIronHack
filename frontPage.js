@@ -2,16 +2,15 @@ window.onload = function () {
     let theGame;
     let character;
 
-    let buttonA = document.querySelector(".aButton");
-    let buttonB = document.querySelector(".Bbutton");
-    let startButton = document.querySelector(".Start");
-    let nes = document.querySelector("#NES");
-    let blinkStart = document.querySelector(".Start-Game");
+    let mainTitle = document.querySelector("#main-title");
+    let startButton = document.querySelector(".startgamebtn");
+    let startGameBtn = document.querySelector(".startgamebtn");
+    let blinkStart = document.querySelector(".start-game");
+    let bubble = document.querySelector('#bubble');
     let canvasElement = document.querySelector("#canvas");
 
     startButton.addEventListener("click", startSound);
-    buttonA.addEventListener("click", aSound);
-    buttonB.addEventListener("click", bSound);
+   
 
     
     function startSound(e) {
@@ -22,25 +21,27 @@ window.onload = function () {
 
         setTimeout(() => {
             theGame = new Game();
-            nes.remove();
-            blinkStart.remove();
+             mainTitle.remove();
+             startGameBtn.remove();
+             blinkStart.remove();
+             bubble.remove();
             theGame.gameStart();
 
         }, 50);
 
     }
 
-    function aSound() {
-        let Abutton = new Audio();
-        Abutton.src = "music/Mario.wav";
-        Abutton.play();
-    }
+    // function aSound() {
+    //     let Abutton = new Audio();
+    //     Abutton.src = "music/Mario.wav";
+    //     Abutton.play();
+    // }
 
-    function bSound() {
-        let Bbutton = new Audio();
-        Bbutton.src = "music/Pokemon.wav";
-        Bbutton.play();
-    }
+    // function bSound() {
+    //     let Bbutton = new Audio();
+    //     Bbutton.src = "music/Pokemon.wav";
+    //     Bbutton.play();
+    // }
 
     
 } //End
@@ -55,7 +56,7 @@ let canvasElement = document.querySelector("#canvas");
         img = document.getElementById("img");
         img.innerHTML +=`
         
-        <img src="images/gameOver.jpg">;
+        <img src="images/gameOver.jpg">
         
         ` 
         
